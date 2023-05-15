@@ -32,11 +32,6 @@ class Server:
     def get_page(
         self, page: int = 1, page_size: int = 10
     ) -> List[List]:
-        pass
-
-    def get_page(
-        self, page: int = 1, page_size: int = 10
-    ) -> List[List]:
         """
         Args: page, page_size
         Returns: Dataset
@@ -52,25 +47,27 @@ class Server:
         else:
             return self.__dataset[index:i[1]]
 
-    def get_hyper(self, index: int = None,
-                  page_size: int = 10) -> Dict:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """
-        Dataset get gotten by changing page
+        Args:
+            page: int - page number
+            page_size: int - size of page
+        Returns: Dictionary
         """
-        dataset = self.indexed_dataset()
-        assert type(index) == int and type(page_size) == int and\
-            index >= 0 and index < len(dataset)
-        data = []
-        next_page = index
-        for _ in range(page_size):
-            while not dataset.get(next_page):
-                next_page += 1
-            data.append(dataset.get(next_page))
-            next_page += 1
-        new_dict = {
-            "index": index,
-            "data": data,
-            "page_size": page_size,
-            "next_index": next_page
+        assert type(page_size) is int and type(page) is int
+        assert page > 0
+        assert page_size > 0
+
+        data = self.get_page(page, page_size)
+        next_page = page + 1 if len(self.get_page(page + 1, page_size)) > 0 else None
+        prev_page = page - 1 if page > 1 else None
+        total_pages = math.ceil(len(self.__dataset) / page_size)
+
+        return {
+            'page_size': page_size,
+            'page': page,
+            'data': data,
+            'next_page': next_page,
+            'prev_page': prev_page,
+            'total_pages': total_pages
         }
-        return new_dict
