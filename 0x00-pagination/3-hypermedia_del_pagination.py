@@ -38,10 +38,11 @@ class Server:
                 i: dataset[i] for i in range(len(dataset))
             }
         return self.__indexed_dataset
-    
+
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        Returns a dictionary with the page data and metadata based on the index and page_size.
+        Returns a dictionary with the page
+        data and metadata based on the index and page_size.
         Args:
             index: int - the current start index of the return page
             page_size: int - the current page size
