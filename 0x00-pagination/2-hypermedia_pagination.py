@@ -59,7 +59,9 @@ class Server:
         assert page_size > 0
 
         data = self.get_page(page, page_size)
-        next_page = page + 1 if len(self.get_page(page + 1, page_size)) > 0 else None
+        next_page = page + 1 if len(
+            self.get_page(page + 1, page_size)
+        ) > 0 else None
         prev_page = page - 1 if page > 1 else None
         total_pages = math.ceil(len(self.__dataset) / page_size)
 
