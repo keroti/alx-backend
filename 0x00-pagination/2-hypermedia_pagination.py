@@ -53,7 +53,7 @@ class Server:
             return self.__dataset[index:i[1]]
 
     def get_hyper(self, index: int = None,
-                        page_size: int = 10) -> Dict:
+                  page_size: int = 10) -> Dict:
         """
         Dataset get gotten by changing page
         """
