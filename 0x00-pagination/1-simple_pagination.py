@@ -39,15 +39,16 @@ class Server:
         self, page: int = 1, page_size: int = 10
     ) -> List[List]:
         """
-        Method: get_page with arguments
-        Arguments: page, page_size
+        Args: page, page_size
+        Returns: Dataset
         """
         assert type(page_size) is int and type(page) is int
         assert page > 0
         assert page_size > 0
         self.dataset()
         i = index_range(page, page_size)
-        if i[0] >= len(self.__dataset):
+        index = i[0]
+        if index >= len(self.__dataset):
             return []
         else:
-            return self.__dataset[i[0]:i[1]]
+            return self.__dataset[index:i[1]]
