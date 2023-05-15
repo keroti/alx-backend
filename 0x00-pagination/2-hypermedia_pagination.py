@@ -34,23 +34,18 @@ class Server:
     ) -> List[List]:
         pass
 
-    def get_page(
-        self, page: int = 1, page_size: int = 10
-    ) -> List[List]:
+    def indexed_dataset(self) -> Dict[int, List]:
         """
-        Args: page, page_size
-        Returns: Dataset
+        returns Dataset indexed by sorting position,
+        starting at 0
         """
-        assert type(page_size) is int and type(page) is int
-        assert page > 0
-        assert page_size > 0
-        self.dataset()
-        i = index_range(page, page_size)
-        index = i[0]
-        if index >= len(self.__dataset):
-            return []
-        else:
-            return self.__dataset[index:i[1]]
+        if self.__indexed_dataset is None:
+            dataset = self.dataset()
+            truncated_dataset = dataset[:1000]
+            self.__indexed_dataset = {
+                i: dataset[i] for i in range(len(dataset))
+            }
+            return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None,
                         page_size: int = 10) -> Dict:
