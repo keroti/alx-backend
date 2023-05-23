@@ -23,7 +23,7 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale():
     """
-    return best_match language accepted
+    return locale from request
     """
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
