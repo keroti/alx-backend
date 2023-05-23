@@ -4,15 +4,16 @@ Module to Parametrize templates
 """
 from flask import Flask, render_template, request
 from flask_babel import Babel, gettext
+from typing import List
 
 
 class Config:
     """
-    class for Flask Babel configuration.
+    Class for Flask Babel configuration.
     """
-    LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = "en"
-    BABEL_DEFAULT_TIMEZONE = "UTC"
+    LANGUAGES: List[str] = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE: str = "en"
+    BABEL_DEFAULT_TIMEZONE: str = "UTC"
 
 
 app = Flask(__name__)
@@ -21,20 +22,23 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """
-    return locale from request
+    Return locale from request
     """
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @app.route("/")
-def index():
+def index() -> str:
     """
-    Return home title and header according to
-    language
+    Return home title and header according to language
     """
-    return render_template("3-index.html")
+    return render_template(
+        "3-index.html",
+        title=gettext("home_title"),
+        header=gettext("home_header")
+    )
 
 
 if __name__ == "__main__":
