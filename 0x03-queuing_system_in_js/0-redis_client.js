@@ -5,15 +5,14 @@ import { createClient } from "redis";
 const client = createClient();
 
 // Listen for the "connect" event and print the message when it occurs
-client.on("ready", () => {
+client.on("connect", () => {
     console.log("Redis client connected to the server");
 });
 
 // Listen for the "error" event and print the error message when it occurs
 client.on("error", (error) => {
     console.error(
-        "Redis client not connected to the server:",
-        error.message
+        console.log('Redis client not connected to the server:', err.toString())
     );
 });
 
